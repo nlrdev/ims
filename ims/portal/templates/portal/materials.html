@@ -1,0 +1,24 @@
+{% extends 'main.html' %} {% load crispy_forms_tags %} {% block main %}
+<div class="row">
+    <div class="col-3">
+        <div class="rounded border border-dark p-2 shadow">
+            {% csrf_token %}
+            <div class="btn-group-vertical main_side_menu">
+                <a class="btn btn-info" id="recalculate_materials">recalculate</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <table id="mats_table" class="table text-dark display">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Qty (<span id="net_measure"></span>)</th>
+                    <th>Cost (R <span id="total_cost"></span>)</th>
+                    <th>Cost per gram</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+{% endblock %}

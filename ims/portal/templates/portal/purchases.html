@@ -1,0 +1,54 @@
+{% extends 'main.html' %} {% load crispy_forms_tags %} {% block main %}
+<div class="row">
+    <div class="col-3">
+        <div class="d-flex justify-content-center p-1">
+            <div class="rounded border border-dark p-2 shadow" style="width: 400px">
+                <h5 class="text-center">Add New Ingredients</h5 class="text-center">
+                <form id="material_form" method="post">
+                    {% csrf_token %} {{ material_form | crispy }}
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center p-1">
+            <div class="rounded border border-dark p-2 shadow" style="width: 400px">
+                <h5 class="text-center">Add New Puchace</h5 class="text-center">
+                <form id="puchaces_form" method="post">
+                    {% csrf_token %} {{ purchase_form | crispy }}
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <table id="purchace_table" class="table text-dark display">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Qty: (<span id="total_measure"></span>)</th>
+                    <th>Price: (R<span id="total_price"></span>)</th>
+                    <th>Notes</th>
+                    <th>Date of purchace</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div id="editNoteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="note_form" style="padding: 50px">
+                <input hidden type="text" id="note_id" name="note_id" value="" />
+                <label for="note_value">Notes:</label><br />
+                <textarea form="note_form" rows="8" cols="53" type="text" id="note_value" name="note_value" value="">
+                </textarea><br>
+                <input class="btn btn-primary" type="submit" value="Save" />
+                <div class="float-right">
+                    <a class="btn btn-danger" onclick="clear_note_form()">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

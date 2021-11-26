@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  ims:
+    build: .
+    restart: always
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn ims.wsgi:application  -b 0.0.0.0:80"
+    container_name: ims
+    volumes:
+      - ./ims:/usr/src/app
+
+  nginx-ims:
+    image: nginx:latest
+    restart: always
+    container_name: nginx-ims
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=hostnet"
+      - "traefik.http.routers.entrypoints=web"
+      - "traefik.http.routers.nginx-ims.rule=Host(`ims.localhost`)"
+      - "traefik.http.services.nginx-ims.loadbalancer.server.port=80"
+    volumes:
+      - ./ims:/usr/src/app
+      - ./nginx:/etc/nginx/conf.d/
+    depends_on:
+      - ims
+
+  db-ims:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'ims'
+      POSTGRES_PASSWORD: 'ims'
+      POSTGRES_DB: 'ims'
+    volumes:
+      - imsdata:/var/lib/postgresql/data
+
+volumes: 
+    imsdata:
+
+    
+networks: 
+  default: 
+    external: 
+      name: hostnet

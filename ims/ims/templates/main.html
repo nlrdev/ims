@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IMS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bs.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dt/dt.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'jquery-ui/jquery-ui.css' %}">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-dark text-uppercase fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler page-text" type="button" data-mdb-toggle="collapse" data-mdb-target="navTag" aria-controls="navTag" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand text-white" href="{% url 'home' %}"><i class="fas fa-home"> Home</i></a>
+            <div class="collapse navbar-collapse justify-content-center" id="navTag">
+                <a href="{% url 'materials' %}" class="nav-link  text-white
+                {% if request.resolver_match.url_name == 'materials' %}mlink-a{% endif %}">
+                    Ingredient Store
+                </a>
+                <a href="{% url 'purchases' %}" class="nav-link text-white
+                {% if request.resolver_match.url_name == 'purchases' %}mlink-a{% endif %}">
+                    Purchase List
+                </a>
+                <a href="{% url 'recipes' %}" class="nav-link  text-white
+                {% if request.resolver_match.url_name == 'recipes' %}mlink-a{% endif %}">
+                    Recipe Manager
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid" style="padding-top: 100px;">
+        {% block main %} {% endblock %}
+    </div>
+</body>
+<script type="text/javascript" src="{% static 'jq.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery-ui/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'dt/dt.js' %}"></script>
+<script type="text/javascript" src="{% static 'dt/dtsum.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bs.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bsb.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static page_script %}"></script>
+
+</html>
