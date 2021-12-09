@@ -1,5 +1,5 @@
 pipeline {
-    agent Dochost
+    agent any
 
     stages {
         stage('Build') {
