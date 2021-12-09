@@ -3,6 +3,7 @@ version: "3"
 services:
   ims:
     build: .
+    image: localhost:5000/ims:latest
     restart: always
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn ims.wsgi:application  -b 0.0.0.0:80"
     container_name: ims
