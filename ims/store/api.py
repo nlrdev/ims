@@ -59,9 +59,7 @@ def recalculate_materials():
         m.net_measure += Decimal(p.measure)
         m.total_cost += Decimal(p.price)
         m.save()
-    data = []
-    data.append({"status": "sorted"})
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"status": "sorted"}), content_type="application/json")
 
 
 def add_material(request):
@@ -77,7 +75,7 @@ def add_material(request):
     else:
         instance = Material(name=_name)
         instance.save()
-        data.append({"id": instance.pk, "text": instance.name})
+        data = {"id": instance.pk, "text": instance.name}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -118,18 +116,14 @@ def add_purchase(request):
         date_of_purchase=_date_of_purchase,
     )
     instance.save()
-    data = []
-    data.append({"status": "saved"})
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"status": "saved"}), content_type="application/json")
 
 
 def add_purchase_note(request):
     p = get_object_or_404(Purchase, pk=escape(request.POST.get("id")))
     p.notes = escape(request.POST.get("note"))
     p.save()
-    data = []
-    data.append({"status": "saved"})
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"status": "saved"}), content_type="application/json")
 
 
 def get_recipes():
@@ -141,20 +135,13 @@ def get_recipes():
 
 
 def add_recipe(request):
-    data = []
     _name = escape(request.POST.get("name"))
     if Recipe.objects.filter(name=_name).exists():
-        data.append(
-            {
-                "status": "failed",
-            }
-        )
-        return HttpResponse(json.dumps(data), content_type="application/json")
+        return HttpResponse(json.dumps({"status": "failed"}), content_type="application/json")
     else:
         instance = Recipe(name=_name)
         instance.save()
-        data.append({"status": "saved"})
-        return HttpResponse(json.dumps(data), content_type="application/json")
+        return HttpResponse(json.dumps({"status": "saved"}), content_type="application/json")
 
 
 def update_recipe(request):
@@ -204,6 +191,4 @@ def get_recipe_ingredient(request):
 
 def delete_recipe_ingredient(request):
     Ingredient.objects.filter(pk=escape(request.POST.get("id"))).delete()
-    data = []
-    data.append({"status": "deleted"})
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"status": "deleted"}), content_type="application/json")
