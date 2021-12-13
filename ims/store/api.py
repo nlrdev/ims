@@ -9,6 +9,17 @@ from store.models import Purchase, Material, Recipe, Ingredient
 from store.forms import *
 
 
+def is_ajax(request):
+    return True if request.headers.get('x-requested-with') == 'XMLHttpRequest' else False
+
+
+def is_post(request):
+    return True if request.method == 'POST' else False
+
+
+def is_get(request):
+    return True if request.method == 'GET' else False
+
 
 def forbidden():
     return HttpResponseForbidden()
