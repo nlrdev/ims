@@ -63,15 +63,9 @@ def recalculate_materials():
 
 
 def add_material(request):
-    data = []
     _name = escape(request.POST.get("name")).lower()
     if Material.objects.filter(name=_name).exists():
-        data.append(
-            {
-                "status": "failed",
-            }
-        )
-        return HttpResponse(json.dumps(data), content_type="application/json")
+        return HttpResponse(json.dumps({"status": "failed"}), content_type="application/json")
     else:
         instance = Material(name=_name)
         instance.save()
@@ -149,13 +143,10 @@ def update_recipe(request):
     r.name = escape(request.POST.get("name"))
     r.notes = escape(request.POST.get("notes"))
     r.save()
-    data = []
-    data.append(
-        {
-            "name": r.name, 
-            "notes": r.notes,
-        }
-    )
+    data = {
+        "name": r.name, 
+        "notes": r.notes,
+    }
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -164,14 +155,11 @@ def add_recipe_ingredient(request):
     mat = get_object_or_404(Material, pk=escape(request.POST.get("type")))
     instance = Ingredient(type=mat, recipe=recipe, measure=escape(request.POST.get("qty")))
     instance.save()
-    data = []
-    data.append(
-        {
-            "id": instance.pk,
-            "name": instance.type.name, 
-            "qty": str(instance.measure),
-        }
-    )
+    data = {
+        "id": instance.pk,
+        "name": instance.type.name, 
+        "qty": str(instance.measure),
+    }
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
